@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<?php
+//header ("Content-Type: text/html; charset=utf-8");
+
+// Get user information obtained by Apache from the Estonian ID card.
+// Return list [last_name,first_name,person_code] or False if fails.
+
+function get_user () {
+  // get relevant environment vars set by Apache
+  // SSL_CLIENT_S_DN example:
+  //  /C=EE/O=ESTEID/OU=authentication/CN=SMITH,JOHN,37504170511/
+  //  SN=SMITH/GN=JOHN/serialNumber=37504170511
+  $ident=getenv("X-SSL-CLIENT-DN");
+  #$verify=getenv("SSL_CLIENT_VERIFY");
+  // check and parse the values
+  #if (!$ident || $verify!="SUCCESS") return False;
+  return $ident;
+}
+
+
+$user=get_user();
+//if (!$user) echo ("Authentication failed.");
+//else {
+echo "Last name: " . $user . "<br>";
+//echo "First name: " . $user . "<br>";
+//echo "Person code: " . $user . "<br>";
+//}
+?>
+</html>
