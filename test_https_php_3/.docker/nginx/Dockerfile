@@ -5,7 +5,7 @@ USER root
 RUN mkdir -p /etc/nginx/conf
 RUN mkdir -p /etc/nginx/conf.d
 RUN mkdir -p /etc/nginx/logs
-RUN mkdir -p /usr/share/nginx/
+RUN mkdir -p /usr/share/nginx/html
 RUN chown -R root:root /etc/nginx/logs
 
 #RUN chown -R nginx:nginx /etc/nginx/conf

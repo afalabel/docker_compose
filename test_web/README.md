@@ -1,71 +1,13 @@
-# Example take from :
-https://www.howtoforge.com/tutorial/docker-guide-dockerizing-python-django-application/
-and
-https://tutorial.djangogirls.org/it/django_start_project/
+##https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-16-04
 
-With some minor modifications
+## CentOS 7: Docker, Nginx, and flask
 
-## Create directory structure
+This will build the necessary services (nginx and flask) to serve php files.
 
-```
-mkdir test_web
-cd test_web
-mkdir project/ config/
-```
-## Django Example
-```
-mkdir django_test/
-cd  django_test/
-django-admin startproject mysite
-```
-```
-mysite
-    ├── mysite
-    │  
-    └── manage.py
-```
-### Copy all the directory structure to the docker compose project folder
-```
-cp -r * ~/docker_cache_studies/test_web/project/.
-```
+The project directory will mount to ```/opt/app```.
 
-## List of the files to edit
-```
-vim config/requirements.txt
-mkdir -p config/nginx/
-vim config/nginx/django.conf
-vim Dockerfile
-vim docker-compose.yml
-```
+```docker-compose build```
+```docker-compose up -d```
 
-## Modification to django config
-In settings.py
-```
-ALLOW_HOSTS = ['web']
-```
-and
-```
-DATABASES = {  
-     'default': {
-         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-         'NAME': 'postgres',
-         'USER': 'postgres',
-         'HOST': 'db',
-         'PORT': 5432,
-     }
- }
-```
-and
-```
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-```
-## Build and run
-```
-docker-compose build
-docker-compose up -d
-```
-check the running containers
-```
-docker-compose ps
-docker-compose images
-```
+#N.B.
+#nginx e flask sono su due contained diversi.
