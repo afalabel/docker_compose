@@ -19,6 +19,8 @@ RUN source myprojectenv/bin/activate
 
 RUN pip install uwsgi flask
 
-COPY ./flask_project_code/test.py /opt/app/myproject/test.py
+COPY ./flask_project_code/myproject.py /opt/app/myproject/myproject.py
+COPY ./flask_project_code/wsgi.py /opt/app/myproject/myproject.py
+COPY ./flask_project_code/myproject.ini /opt/app/myproject/myproject.ini
 
-RUN python  /opt/app/myproject/test.py
+#CMD uwsgi --ini /opt/app/myproject/myproject.ini
