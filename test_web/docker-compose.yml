@@ -5,17 +5,15 @@ services:
       context: .
       dockerfile: .docker/nginx/Dockerfile
     ports:
-      - "8443:443"
+      - "8080:80"
     expose:
-      - "443"
+      - "80"
     stdin_open: true
     tty: true
     volumes:
         - ${PWD}/html:/usr/share/nginx/html
-        - ${PWD}/certs:/etc/nginx/certs/
     links:
         - flask
-
   flask:
     build:
       context: .

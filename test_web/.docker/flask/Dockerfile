@@ -4,7 +4,7 @@ RUN yum update -y && \
 
 RUN yum install -y centos-release-scl
 
-RUN yum install yum install python-pip python-devel gcc -y
+RUN yum install yum install sudo python-pip python-devel gcc pcre-devel openssl-devel zlib-devel -y
 
 RUN pip install --upgrade pip
 
@@ -17,7 +17,7 @@ CMD ["su","-","flask","-c","cd /home/flask/myproject"]
 
 CMD ["su","-","flask","-c","virtualenv myprojectenv"]
 
-CMD ["su","-","flask","-c","source myprojectenv/bin/activate"]
+CMD ["su","-","flask","-c","source /home/flask/myprojectenv/bin/activate"]
 
 RUN pip install uwsgi flask
 
@@ -28,6 +28,8 @@ COPY ./flask_project_code/myproject.ini /home/flask/myproject/myproject.ini
 
 #CMD ["su","-","flask","/bin/uwsgi --ini /home/flask/myproject/myproject.ini"]
 
+#ENTRYPOINT ["su","-","flask","/bin/uwsgi --ini /home/flask/myproject/myproject.ini"]
 
 
-CMD ["/bin/sh -c "while true; do sleep 12 ; echo "foreground"; done""]
+
+ENTRYPOINT [ "sh", "-c","while true; do sleep 12; done"]
