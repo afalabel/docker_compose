@@ -8,6 +8,7 @@ services:
       - "8080:80"
     expose:
       - "80"
+      - "443"
     stdin_open: true
     tty: true
     volumes:
@@ -18,7 +19,9 @@ services:
     build:
       context: .
       dockerfile: .docker/flask/Dockerfile
+    ports:
+      - "8000:8000"
     expose:
-      - "5000"
+      - "8000"
     volumes:
-      - ${PWD}/flask_project_code:/opt/app/myproject
+      - ${PWD}/flask_project_code:/root/flask/myproject
