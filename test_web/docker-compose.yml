@@ -12,7 +12,7 @@ services:
     stdin_open: true
     tty: true
     volumes:
-        - ${PWD}/html:/usr/share/nginx/html
+        - ./html:/usr/share/nginx/html
     links:
         - flask
   flask:
@@ -24,4 +24,4 @@ services:
     expose:
       - "8000"
     volumes:
-      - ${PWD}/flask_project_code:/root/flask/myproject
+      - ./flask_project_code:/root/flask/myproject

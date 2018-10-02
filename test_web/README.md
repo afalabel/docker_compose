@@ -10,4 +10,4 @@ The project directory will mount to ```/opt/app```.
 ```docker-compose up -d```
 
 #N.B.
-#nginx e flask sono su due contained diversi.
+#nginx e flask sono su due container diversi.
