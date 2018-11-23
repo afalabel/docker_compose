@@ -1,0 +1,28 @@
+version: '3'
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: .docker/nginx/Dockerfile
+    ports:
+      - "8443:443"
+    expose:
+      - "443"
+    stdin_open: true
+    tty: true
+    volumes:
+        - ${PWD}/html:/usr/share/nginx/html
+        - ${PWD}/certs:/etc/nginx/certs/
+    links:
+        - nginx-be
+
+  nginx-be:
+    build:
+      context: .
+      dockerfile: .docker/nginx-be/Dockerfile
+    expose:
+      - "9000"
+    volumes:
+      - ${PWD}/html_be:/usr/share/nginx/html
+    stdin_open: true
+    tty: true

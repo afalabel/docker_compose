@@ -13,6 +13,13 @@ def test():
 def main():
     return "<h1 style='color:blue'>Main!</h1>"
 
+@application.route('/about')
+def about():
+    return 'The about page'
+
+@app.route('/login')
+def login():
+    return 'login'
 
 if __name__ == "__main__":
     application.run(host='0.0.0.0')
