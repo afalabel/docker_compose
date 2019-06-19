@@ -1,0 +1,49 @@
+version: "3"
+
+volumes:
+  trustanchors:
+  cabundle:
+
+services:
+  trust:
+    image: indigoiam/trustanchors
+    environment:
+      - FORCE_TRUST_ANCHORS_UPDATE=0
+    volumes:
+      - trustanchors:/etc/grid-security/certificates
+      - cabundle:/etc/pki
+    networks:
+      - cache
+
+  nginx-cache:
+    image: storm2/ngx-voms
+    volumes: 
+      - cabundle:/etc/pki
+      - trustanchors:/etc/grid-security/certificates
+      - ./certs/cache:/certs
+      - ./files/nginx_cache.conf:/home/build/local/openresty/nginx/conf/nginx.conf
+
+    depends_on:
+      - trust
+    ports:
+      - "3000:443"
+    networks:
+      - cache
+
+  se:
+    image: storm2/ngx-voms
+    volumes: 
+      - cabundle:/etc/pki
+      - trustanchors:/etc/grid-security/certificates
+      - ./certs/se:/certs
+      - ./files/nginx_se.conf:/home/build/local/openresty/nginx/conf/nginx.conf
+
+    depends_on:
+      - trust
+    networks:
+      - cache
+
+networks:
+  cache:
+
+
