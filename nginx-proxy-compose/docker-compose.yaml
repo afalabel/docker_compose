@@ -3,6 +3,8 @@ version: "3"
 volumes:
   trustanchors:
   cabundle:
+  cache_storage:
+  se_storage:
 
 services:
   trust:
@@ -15,11 +17,12 @@ services:
     networks:
       - cache
 
-  nginx-cache:
+  cache.example:
     image: storm2/ngx-voms
     volumes: 
       - cabundle:/etc/pki
       - trustanchors:/etc/grid-security/certificates
+      - cache_storage:/data/nginx/cache
       - ./certs/cache:/certs
       - ./files/nginx_cache.conf:/home/build/local/openresty/nginx/conf/nginx.conf
 
@@ -30,7 +33,7 @@ services:
     networks:
       - cache
 
-  se:
+  se.example:
     image: storm2/ngx-voms
     volumes: 
       - cabundle:/etc/pki
@@ -43,7 +46,29 @@ services:
     networks:
       - cache
 
+  client:
+    image: centos:latest
+    environment:
+      TZ: Europe/Rome
+
+    volumes:
+      - cabundle:/etc/pki
+      - trustanchors:/etc/grid-security/certificates
+      - se_storage:/data/nginx/www
+      - cache_storage:/data/nginx/cache
+      - ./certs/client:/certs
+
+    depends_on:
+      - trust
+      - se.example
+      - cache.example
+
+    networks:
+      - cache
+    entrypoint: sleep infinity
+
 networks:
   cache:
+    driver: bridge
 
 
